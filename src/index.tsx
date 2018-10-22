@@ -5,10 +5,8 @@ import { ConnectedRouter } from 'connected-react-router';
 
 import App from "./app"
 
-import { configureStore } from "./store/configureStore";
 import { history } from "./store/history";
-
-const store = configureStore();
+import { store } from "./store/store";
 
 ReactDOM.render(
     <Provider store={store}>

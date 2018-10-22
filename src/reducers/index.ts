@@ -1,5 +1,6 @@
 import { combineReducers } from "redux";
+import { jiraReducer } from "./jiraReducer";
 
 export const rootReducer = combineReducers({
-    placeholder: (state: any = {}, action: any) => state
+    jira: jiraReducer
 });
