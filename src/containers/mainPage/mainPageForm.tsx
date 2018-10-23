@@ -6,6 +6,7 @@ import _ from "lodash";
 import { jiraIssueIndexService } from '../../services/jiraIssueIndexService';
 import { Field, InjectedFormProps, reduxForm } from 'redux-form';
 import { RedisJiraIssue } from '../../models/redisJiraIssue';
+import IssueTypeahead from '../../components/issueTypeahead';
 
 interface OwnProps {
     jiraIssues: RedisJiraIssue[];
@@ -31,11 +32,7 @@ export class MainPageForm extends React.Component<OwnProps & InjectedFormProps<{
             <form onSubmit={this.props.handleSubmit(this.props.onSubmit.bind(this))}>
                 <FormGroup>
                     <ControlLabel>Issue</ControlLabel>
-                    <AsyncTypeahead options={this.state.typeaheadOptions} 
-                                    autoFocus={true}
-                                    isLoading={false}
-                                    onSearch={this.onSearch.bind(this)}
-                                    filterBy={() => true}></AsyncTypeahead>
+                    <Field name="issue" component={IssueTypeahead} jiraIssues={this.props.jiraIssues} /> 
                 </FormGroup>
                 <FormGroup>
                     <ControlLabel>Date</ControlLabel>
@@ -46,8 +43,8 @@ export class MainPageForm extends React.Component<OwnProps & InjectedFormProps<{
                     <Field name="hours" component="input" className="form-control" /> 
                 </FormGroup>
                 <FormGroup>
-                    <ControlLabel>Description</ControlLabel>
-                    <Field name="description" component="textarea" className="form-control" /> 
+                    <ControlLabel>Comment</ControlLabel>
+                    <Field name="comment" component="textarea" className="form-control" /> 
                 </FormGroup>
                 <div>
                     <Button className="btn btn-primary" type="submit">Submit</Button>
@@ -57,4 +54,5 @@ export class MainPageForm extends React.Component<OwnProps & InjectedFormProps<{
     }
 }
 
-export default reduxForm<{}, OwnProps>({ form: "mainPageForm", enableReinitialize: true })(MainPageForm);
+export const formName = "mainPageForm";
+export default reduxForm<{}, OwnProps>({ form: formName, enableReinitialize: true })(MainPageForm);

@@ -7,6 +7,7 @@ const jiraApiKey = "5YBRbslcdecIOMToifDZ52A5";
 const jiraBase64Auth = Buffer.from(`${jiraUsername}:${jiraApiKey}`).toString("base64");
 const jiraAuthHeaderValue = `Basic ${jiraBase64Auth}`;
 
+
 module.exports = {
     entry: "./src/index.tsx",
     output: {

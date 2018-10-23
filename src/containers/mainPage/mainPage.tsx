@@ -5,9 +5,10 @@ import { AsyncTypeahead } from "react-bootstrap-typeahead";
 import { bindActionCreators, Dispatch } from 'redux';
 import { FormGroup, ControlLabel } from 'react-bootstrap';
 import * as _ from "lodash";
+import moment from "moment";
 
 import { jiraIssueIndexService } from '../../services/jiraIssueIndexService';
-import { loadAllJiraProjects, loadAllJiraIssues } from '../../actions/jiraActions';
+import { loadAllJiraProjects, loadAllJiraIssues, saveWorklog } from '../../actions/jiraActions';
 import { Field } from 'redux-form';
 import MainPageForm from './mainPageForm';
 
@@ -21,18 +22,20 @@ export class MainPage extends React.Component<OwnProps & StateProps & DispatchPr
     state = {typeaheadOptions: [] as {id: string, label: string}[]};
 
     async componentDidMount() {
-        await this.props.actions.loadAllJiraProjects();
         await this.props.actions.loadAllJiraIssues();
     }
 
     async onSubmit(values: any) {
-        console.log(values);
+        if (values.issue != null && values.date != null && values.hours != null && values.comment != null) {
+            await this.props.actions.saveWorklog(values.issue.id, moment(values.date).toDate(), values.hours, values.comment);
+        }
     }
 
     render() {
         return (
             <div className="container">
-                <MainPageForm jiraIssues={this.props.jiraIssues}
+                <MainPageForm initialValues={this.props.initialValues}
+                              jiraIssues={this.props.jiraIssues}
                               onSubmit={this.onSubmit.bind(this)}></MainPageForm>
             </div>
         );
@@ -41,13 +44,14 @@ export class MainPage extends React.Component<OwnProps & StateProps & DispatchPr
 
 function mapStateToProps(state: State) {
     return {
+        initialValues: {date: moment().format("YYYY-MM-DD")},
         jiraIssues: state.jira && state.jira.jiraIssues || []
     };
 }
 
 function mapActionToProps(dispatch: Dispatch) {
     return {
-        actions: bindActionCreators({loadAllJiraProjects, loadAllJiraIssues}, dispatch)
+        actions: bindActionCreators({loadAllJiraProjects, loadAllJiraIssues, saveWorklog}, dispatch)
     };
 }
 

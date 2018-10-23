@@ -2,6 +2,8 @@ declare const JIRA_API_BASE_URL: string;
 declare const JIRA_API_AUTH_HEADER_VALUE: string;
 
 import axiosStatic from "axios";
+import moment from "moment";
+import request from "request";
 import { JiraIssue } from "../models/jiraIssue";
 import { JiraProject } from "../models/jiraProject";
 const axios = axiosStatic.create({baseURL: JIRA_API_BASE_URL});
@@ -31,6 +33,44 @@ class JiraService {
         }
 
         return allResults;
+    }
+
+    async saveWorklog(issueKey: string, date: Date, hours: number, comment: string): Promise<any> {
+        const startDate = moment(date).startOf("day").format("YYYY-MM-DDTHH:mm:ss.000ZZ");
+        const currentDate = moment().format("YYYY-MM-DDTHH:mm:ss.000ZZ");
+        const timeSpentSeconds= hours * 60 * 60;
+        const body = {
+            "comment": {
+                "type": "doc",
+                "version": 1,
+                "content": [
+                    {
+                        "type": "paragraph",
+                        "content": [
+                            {
+                                "type": "text",
+                                "text": comment
+                            }
+                        ]
+                    } 
+                ]
+            },
+            "created": currentDate,
+            "updated": currentDate,
+            "started": startDate,
+            "timeSpentSeconds": timeSpentSeconds
+              
+        }
+        //return await axios.post(`issue/${issueKey}/worklog`, body);
+        return await request({
+            url: `${JIRA_API_BASE_URL}/issue/${issueKey}/worklog`,
+            method: "POST",
+            headers: {
+                Authorization: JIRA_API_AUTH_HEADER_VALUE
+            },
+            json: true,
+            body
+        });
     }
 }
 
