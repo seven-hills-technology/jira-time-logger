@@ -3,10 +3,13 @@ import { State } from '../../store/state';
 import { connect } from 'react-redux';
 import { AsyncTypeahead } from "react-bootstrap-typeahead";
 import { bindActionCreators, Dispatch } from 'redux';
+import { FormGroup, ControlLabel } from 'react-bootstrap';
 import * as _ from "lodash";
 
 import { jiraIssueIndexService } from '../../services/jiraIssueIndexService';
 import { loadAllJiraProjects, loadAllJiraIssues } from '../../actions/jiraActions';
+import { Field } from 'redux-form';
+import MainPageForm from './mainPageForm';
 
 interface OwnProps {
 }
@@ -22,24 +25,15 @@ export class MainPage extends React.Component<OwnProps & StateProps & DispatchPr
         await this.props.actions.loadAllJiraIssues();
     }
 
-    onSearch(searchText: string) {
-        const searchResults: {ref: string, score: number}[] = jiraIssueIndexService.search(searchText);
-        const searchResultsByKey = new Map<string, {ref: string, score: number}>(searchResults.map(x => [x.ref, x]) as any);
-        const newTypeaheadOptions = _(this.props.jiraIssues)
-            .filter(x => searchResultsByKey.has(x.key))
-            .map(x => ({id: x.key, label: `[${x.fields.project.name}] ${x.key} - ${x.fields.summary}`, score: searchResultsByKey.get(x.key).score}))
-            .orderBy(["score"], ["desc"])
-            .value();
-        this.setState({typeaheadOptions: newTypeaheadOptions});
+    async onSubmit(values: any) {
+        console.log(values);
     }
 
     render() {
         return (
-            <div>
-                <AsyncTypeahead options={this.state.typeaheadOptions} 
-                                isLoading={false}
-                                onSearch={this.onSearch.bind(this)}
-                                filterBy={() => true}></AsyncTypeahead>
+            <div className="container">
+                <MainPageForm jiraIssues={this.props.jiraIssues}
+                              onSubmit={this.onSubmit.bind(this)}></MainPageForm>
             </div>
         );
     }
