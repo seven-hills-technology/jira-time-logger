@@ -1,5 +1,5 @@
-import { JiraIssue } from "../models/jiraIssue";
 import { JiraProject } from "../models/jiraProject";
+import { RedisJiraIssue } from "../models/redisJiraIssue";
 
 export interface State {
     jira: StateJira
@@ -7,7 +7,7 @@ export interface State {
 
 export interface StateJira {
     jiraProjects: JiraProject[];
-    jiraIssues: JiraIssue[];
+    jiraIssues: RedisJiraIssue[];
 }
 
 export const initialState: State = {

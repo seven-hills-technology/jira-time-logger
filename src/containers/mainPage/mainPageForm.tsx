@@ -5,10 +5,10 @@ import _ from "lodash";
 
 import { jiraIssueIndexService } from '../../services/jiraIssueIndexService';
 import { Field, InjectedFormProps, reduxForm } from 'redux-form';
-import { JiraIssue } from '../../models/jiraIssue';
+import { RedisJiraIssue } from '../../models/redisJiraIssue';
 
 interface OwnProps {
-    jiraIssues: JiraIssue[];
+    jiraIssues: RedisJiraIssue[];
     onSubmit: (values: any) => void;
 }
 
@@ -20,7 +20,7 @@ export class MainPageForm extends React.Component<OwnProps & InjectedFormProps<{
         const searchResultsByKey = new Map<string, {ref: string, score: number}>(searchResults.map(x => [x.ref, x]) as any);
         const newTypeaheadOptions = _(this.props.jiraIssues)
             .filter(x => searchResultsByKey.has(x.key))
-            .map(x => ({id: x.key, label: `[${x.fields.project.name}] ${x.key} - ${x.fields.summary}`, score: searchResultsByKey.get(x.key).score}))
+            .map(x => ({id: x.key, label: `[${x.project}] ${x.key} - ${x.summary}`, score: searchResultsByKey.get(x.key).score}))
             .orderBy(["score"], ["desc"])
             .value();
         this.setState({typeaheadOptions: newTypeaheadOptions});
