@@ -4,7 +4,7 @@ declare const JIRA_UNCLASSIFIED_ISSUE_KEY: string;
 
 import axiosStatic from "axios";
 import moment from "moment";
-import request from "request";
+import request from "request-promise";
 import { JiraIssue } from "../models/jiraIssue";
 import { JiraProject } from "../models/jiraProject";
 const axios = axiosStatic.create({baseURL: JIRA_API_BASE_URL});
@@ -63,8 +63,8 @@ class JiraService {
             "timeSpentSeconds": timeSpentSeconds
               
         }
-        //return await axios.post(`issue/${issueKey}/worklog`, body);
-        return await request({
+
+        const res = await request({
             url: `${JIRA_API_BASE_URL}/issue/${issueKey}/worklog`,
             method: "POST",
             headers: {
@@ -73,6 +73,7 @@ class JiraService {
             json: true,
             body
         });
+        return res;
     }
 }
 
