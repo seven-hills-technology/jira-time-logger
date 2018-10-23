@@ -36,15 +36,15 @@ export class MainPageForm extends React.Component<OwnProps & InjectedFormProps<{
                 </FormGroup>
                 <FormGroup>
                     <ControlLabel>Date</ControlLabel>
-                    <Field name="date" component="input" className="form-control" type="date" /> 
+                    <Field name="date" component="input" className="form-control" type="date" required /> 
                 </FormGroup>
                 <FormGroup>
                     <ControlLabel>Hours</ControlLabel>
-                    <Field name="hours" component="input" className="form-control" /> 
+                    <Field name="hours" component="input" className="form-control" required /> 
                 </FormGroup>
                 <FormGroup>
                     <ControlLabel>Comment</ControlLabel>
-                    <Field name="comment" component="textarea" className="form-control" /> 
+                    <Field name="comment" component="textarea" className="form-control" required /> 
                 </FormGroup>
                 <div>
                     <Button className="btn btn-primary" type="submit">Submit</Button>

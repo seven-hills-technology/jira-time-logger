@@ -1,5 +1,6 @@
 declare const JIRA_API_BASE_URL: string;
 declare const JIRA_API_AUTH_HEADER_VALUE: string;
+declare const JIRA_UNCLASSIFIED_ISSUE_KEY: string;
 
 import axiosStatic from "axios";
 import moment from "moment";
@@ -35,7 +36,8 @@ class JiraService {
         return allResults;
     }
 
-    async saveWorklog(issueKey: string, date: Date, hours: number, comment: string): Promise<any> {
+    async saveWorklog(issueKey: string, date: Date, hours: number, comment: string) {
+        issueKey = issueKey || JIRA_UNCLASSIFIED_ISSUE_KEY;
         const startDate = moment(date).startOf("day").format("YYYY-MM-DDTHH:mm:ss.000ZZ");
         const currentDate = moment().format("YYYY-MM-DDTHH:mm:ss.000ZZ");
         const timeSpentSeconds= hours * 60 * 60;

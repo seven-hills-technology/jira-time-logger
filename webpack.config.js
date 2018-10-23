@@ -46,7 +46,8 @@ module.exports = {
         }),
         new webpack.DefinePlugin({
             JIRA_API_BASE_URL: JSON.stringify(process.env.JIRA_API_BASE_URL || "https://sevenhillstechnology.atlassian.net/rest/api/3"),
-            JIRA_API_AUTH_HEADER_VALUE: JSON.stringify(process.env.JIRA_API_AUTH_HEADER_VALUE || jiraAuthHeaderValue)
+            JIRA_API_AUTH_HEADER_VALUE: JSON.stringify(process.env.JIRA_API_AUTH_HEADER_VALUE || jiraAuthHeaderValue),
+            JIRA_UNCLASSIFIED_ISSUE_KEY: JSON.stringify(process.env.JIRA_UNCLASSIFIED_ISSUE_KEY || "INT-52")
         })
     ]
 };

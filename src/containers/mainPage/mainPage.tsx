@@ -26,8 +26,9 @@ export class MainPage extends React.Component<OwnProps & StateProps & DispatchPr
     }
 
     async onSubmit(values: any) {
-        if (values.issue != null && values.date != null && values.hours != null && values.comment != null) {
-            await this.props.actions.saveWorklog(values.issue.id, moment(values.date).toDate(), values.hours, values.comment);
+        if (values.date != null && values.hours != null && values.comment != null) {
+            const issueKey = values.issue && values.issue.id || null;
+            await this.props.actions.saveWorklog(issueKey, moment(values.date).toDate(), values.hours, values.comment);
         }
     }
 
