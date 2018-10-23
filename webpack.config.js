@@ -2,11 +2,6 @@ const path = require("path");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require("webpack");
 
-const jiraUsername = "seanprice@sevenhillstechnology.com";
-const jiraApiKey = "5YBRbslcdecIOMToifDZ52A5";
-const jiraBase64Auth = Buffer.from(`${jiraUsername}:${jiraApiKey}`).toString("base64");
-const jiraAuthHeaderValue = `Basic ${jiraBase64Auth}`;
-
 
 module.exports = {
     entry: "./src/index.tsx",
@@ -47,11 +42,6 @@ module.exports = {
                 collapseWhitespace: true
             },
             inject: true
-        }),
-        new webpack.DefinePlugin({
-            JIRA_API_BASE_URL: JSON.stringify(process.env.JIRA_API_BASE_URL || "https://sevenhillstechnology.atlassian.net/rest/api/3"),
-            JIRA_API_AUTH_HEADER_VALUE: JSON.stringify(process.env.JIRA_API_AUTH_HEADER_VALUE || jiraAuthHeaderValue),
-            JIRA_UNCLASSIFIED_ISSUE_KEY: JSON.stringify(process.env.JIRA_UNCLASSIFIED_ISSUE_KEY || "INT-52")
         })
     ],
     externals: [
