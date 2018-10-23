@@ -5,7 +5,8 @@
     "main": "main.js",
     "license": "UNLICENSED",
     "scripts": {
-        "start": "yarn run build-react-dev && electron .",
+        "start": "yarn run build-react-dev && yarn run start-no-build",
+        "start-no-build": "ELECTRON_ENABLE_LOGGING=true electron .",
         "build-react-dev": "webpack --mode development",
         "build-react": "NODE_ENV=production webpack --mode production",
         "build": "yarn run build-react && electron-packager . --out out --overwrite",

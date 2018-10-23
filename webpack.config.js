@@ -35,6 +35,10 @@ module.exports = {
         extensions: [".tsx", ".ts", ".jsx", ".js"]
     },
     target: "node",
+    node: {
+        __filename: true,
+        __dirname: true
+    },
     plugins: [
         new HtmlWebpackPlugin({
             template: './src/index.html',
@@ -49,5 +53,18 @@ module.exports = {
             JIRA_API_AUTH_HEADER_VALUE: JSON.stringify(process.env.JIRA_API_AUTH_HEADER_VALUE || jiraAuthHeaderValue),
             JIRA_UNCLASSIFIED_ISSUE_KEY: JSON.stringify(process.env.JIRA_UNCLASSIFIED_ISSUE_KEY || "INT-52")
         })
+    ],
+    externals: [
+      (function () {
+        var IGNORES = [
+          'electron'
+        ];
+        return function (context, request, callback) {
+          if (IGNORES.indexOf(request) >= 0) {
+            return callback(null, "require('" + request + "')");
+          }
+          return callback();
+        };
+      })()
     ]
 };
