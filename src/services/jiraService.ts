@@ -16,26 +16,6 @@ axios.interceptors.request.use(config => {
 })
 
 class JiraService {
-    async getAllJiraProjects(): Promise<JiraProject[]> {
-        const res = await axios.get<JiraProject[]>(`project`);
-        return res.data;
-    }
-
-    async getAllJiraIssues(): Promise<JiraIssue[]> {
-        const maxResults = 100;
-        let allResults: JiraIssue[] = [];
-        let resultsBatch: JiraIssue[] = null;
-
-        for (let startAt = 0; resultsBatch == null || resultsBatch.length == maxResults; startAt += maxResults) {
-            console.log(startAt);
-            const res = await axios.get<any>(`search?startAt=${startAt}&maxResults=${maxResults}`);
-            resultsBatch = res.data.issues;
-            allResults = [...allResults, ...resultsBatch];
-        }
-
-        return allResults;
-    }
-
     async saveWorklog(issueKey: string, date: Date, hours: number, comment: string) {
         issueKey = issueKey || JIRA_UNCLASSIFIED_ISSUE_KEY;
         const startDate = moment(date).startOf("day").format("YYYY-MM-DDTHH:mm:ss.000ZZ");

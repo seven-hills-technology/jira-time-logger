@@ -1,4 +1,3 @@
-import { JiraProject } from "../models/jiraProject";
 import { RedisJiraIssue } from "../models/redisJiraIssue";
 
 export interface State {
@@ -6,7 +5,6 @@ export interface State {
 }
 
 export interface StateJira {
-    jiraProjects: JiraProject[];
     jiraIssues: RedisJiraIssue[];
 }
 

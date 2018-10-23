@@ -52,7 +52,6 @@ export default class IssueTypeahead extends React.Component<WrappedFieldProps & 
         const newValue = this.props.input.value != null && this.props.input.value !== "" ? this.props.input.value : null;
 
         const differentValues = (currentValue == null) !== (newValue == null) || (currentValue != null && newValue != null && currentValue.id !== newValue.id);
-        console.log("currentValue:", currentValue, "newValue:", newValue, "differentValues:", differentValues);
         if (differentValues) {
             this.setState({
                 ...this.state,

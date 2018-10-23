@@ -7,17 +7,7 @@ import { reset } from "redux-form";
 import electron from "electron";
 
 export enum jiraActionTypes {
-    JIRA_LOAD_PROJECTS = "JIRA_LOAD_PROJECTS",
     JIRA_LOAD_ISSUES = "JIRA_LOAD_ISSUES"
-};
-
-export const loadAllJiraProjects = () => async (dispatch: Dispatch<any>) => {
-    const jiraProjects = await jiraService.getAllJiraProjects();
-
-    dispatch({
-        type: jiraActionTypes.JIRA_LOAD_PROJECTS,
-        payload: {jiraProjects}
-    });
 };
 
 export const loadAllJiraIssues = () => async (dispatch: Dispatch<any>) => {

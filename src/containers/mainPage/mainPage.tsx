@@ -1,15 +1,11 @@
 import React from 'react';
 import { State } from '../../store/state';
 import { connect } from 'react-redux';
-import { AsyncTypeahead } from "react-bootstrap-typeahead";
 import { bindActionCreators, Dispatch } from 'redux';
-import { FormGroup, ControlLabel } from 'react-bootstrap';
 import * as _ from "lodash";
 import moment from "moment";
 
-import { jiraIssueIndexService } from '../../services/jiraIssueIndexService';
-import { loadAllJiraProjects, loadAllJiraIssues, saveWorklog } from '../../actions/jiraActions';
-import { Field } from 'redux-form';
+import { loadAllJiraIssues, saveWorklog } from '../../actions/jiraActions';
 import MainPageForm from './mainPageForm';
 
 interface OwnProps {
@@ -52,7 +48,7 @@ function mapStateToProps(state: State) {
 
 function mapActionToProps(dispatch: Dispatch) {
     return {
-        actions: bindActionCreators({loadAllJiraProjects, loadAllJiraIssues, saveWorklog}, dispatch)
+        actions: bindActionCreators({loadAllJiraIssues, saveWorklog}, dispatch)
     };
 }
 

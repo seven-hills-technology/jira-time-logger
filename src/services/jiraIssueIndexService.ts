@@ -10,7 +10,6 @@ class JiraIssueIndexService {
             this.addField("summary");
             this.setRef("id");
         });
-        console.log(this.index);
     }
 
     addToIndex(doc: {id: string, key: string, project: string, summary: string}) {
